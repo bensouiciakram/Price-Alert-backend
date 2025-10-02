@@ -2,8 +2,7 @@ from rest_framework import serializers
 from .models import (
     Website,
     Product,
-    Price,
-    Field,
+    PriceHistory,
     Xpath
 )
 
@@ -18,22 +17,17 @@ class ProductSerializer(serializers.ModelSerializer):
     website = WebsiteSerializer()
     class Meta:
         model=Product
-        fields=['url','name','created_at','website'] 
+        fields=['url','created_at','website'] 
 
 
-class PriceSerializer(serializers.ModelSerializer):
+class PriceHistorySerializer(serializers.ModelSerializer):
     product = ProductSerializer()
     class Meta:
-        model=Price
+        model=PriceHistory
         fields=['price','checked_at','product']
-
-class FieldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Field
-        fields=['field_name']
 
 
 class XpathSerializer(serializers.ModelSerializer):
     class Meta:
         model=Xpath
-        fields=['selector','website','field']
+        fields=['website','price_selector','title_selector','image_selector']

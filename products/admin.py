@@ -2,8 +2,7 @@ from django.contrib import admin
 from .models import (
     Website,
     Product,
-    Price,
-    Field,
+    PriceHistory,
     Xpath
 )
 
@@ -13,18 +12,13 @@ class WebsiteAdmin(admin.ModelAdmin):
     list_display = ['domain']
 
 
-@admin.register(Price)
+@admin.register(PriceHistory)
 class PriceAdmin(admin.ModelAdmin):
     list_display=['price','checked_at','product']
     list_select_related = ['product']
 
 
-@admin.register(Field)
-class FieldAdmin(admin.ModelAdmin):
-    list_display=['field_name']
-
-
 @admin.register(Xpath)
 class XpathAdmin(admin.ModelAdmin):
-    list_display=['selector','website','field']
-    list_select_related=['website','field']
+    list_display=['website','title_selector','price_selector','image_selector']
+    list_select_related=['website']

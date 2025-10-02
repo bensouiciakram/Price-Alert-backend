@@ -1,22 +1,21 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet 
+from rest_framework.viewsets import ModelViewSet,GenericViewSet
+from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from .serializers import (
     WebsiteSerializer,
     ProductSerializer,
-    PriceSerializer,
-    FieldSerializer,
+    PriceHistorySerializer,
     XpathSerializer
 )
 
 from .models import (
     Website,
     Product,
-    Price,
-    Field,
+    PriceHistory,
     Xpath 
 )
 
-class WebsiteViewSet(ModelViewSet):
+class WebsiteViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset = Website.objects.all() 
     serializer_class=WebsiteSerializer
 
@@ -26,16 +25,11 @@ class ProductViewSet(ModelViewSet):
     serializer_class=ProductSerializer
 
 
-class PriceViewSet(ModelViewSet):
-    queryset=Price.objects.all()
-    serializer_class=PriceSerializer
+class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
+    queryset=PriceHistory.objects.all()
+    serializer_class=PriceHistorySerializer
 
 
-class FieldViewSet(ModelViewSet):
-    queryset=Field.objects.all()
-    serializer_class = FieldSerializer
-
-
-class XpathViewSet(ModelViewSet):
+class XpathViewSet(UpdateModelMixin,ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset = Xpath.objects.all()
     serializer_class=XpathSerializer
