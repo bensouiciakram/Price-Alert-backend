@@ -10,7 +10,7 @@ from .models import (
 class WebsiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Website 
-        fields = ['domain']
+        fields = ['url']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -31,3 +31,5 @@ class XpathSerializer(serializers.ModelSerializer):
     class Meta:
         model=Xpath
         fields=['website','price_selector','title_selector','image_selector']
+
+

@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 pillow = "*"
+scrapy = "*"
+requests = "*"
+playwright = "*"
 
 [dev-packages]
 

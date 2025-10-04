@@ -2,7 +2,11 @@ from django.db import models
 
 
 class Website(models.Model):
-    domain = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+    scraping_method = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.url
 
 
 class ProductMetaData(models.Model):
@@ -27,5 +31,11 @@ class Xpath(models.Model):
     price_selector = models.CharField(max_length=255,null=True)
     image_selector = models.CharField(max_length=255,null=True)
     title_selector = models.CharField(max_length=255,null=True)
+    price_cleanup = models.CharField(max_length=255,null=True)
+    title_cleanup = models.CharField(max_length=255,null=True)
+    image_cleanup = models.CharField(max_length=255,null=True)
     
+    def __str__(self):
+        return f'{self.website} xpath'
      
+        

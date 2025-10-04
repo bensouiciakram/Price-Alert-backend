@@ -9,7 +9,7 @@ from .models import (
 # Register your models here.
 @admin.register(Website)
 class WebsiteAdmin(admin.ModelAdmin):
-    list_display = ['domain']
+    list_display = ['url','scraping_method']
 
 
 @admin.register(PriceHistory)
