@@ -13,18 +13,26 @@ class ProductMetaData(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='products/')
 
+    def __str__(self):
+        return f'{self.title} metadata'
+
+
 class Product(models.Model):
     url = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
-    website = models.ManyToManyField(Website)
+    website = models.ForeignKey(Website,on_delete=models.CASCADE)
     meta = models.OneToOneField(ProductMetaData,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.meta.title}'
 
 class PriceHistory(models.Model):
     price = models.DecimalField(max_digits=10,decimal_places=2)
     checked_at = models.DateTimeField()
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.checked_at} price'
 
 class Xpath(models.Model):
     website = models.ForeignKey(Website,on_delete=models.CASCADE)

@@ -21,10 +21,9 @@ class Extractor:
             page = context.new_page()
             page.goto(self.url)
             page_selector = Selector(text=page.content())
-            price = page_selector.xpath(self.price_xpath).get()
-            title = page_selector.xpath(self.title_xpath).get()
-            image = page_selector.xpath(self.image_xpath).get()
-
+            price = page_selector.xpath(self.price_xpath).get('')
+            title = page_selector.xpath(self.title_xpath).get('')
+            image = page_selector.xpath(self.image_xpath).get('')
             return {
                 "price": sub(self.price_cleanup, "", price) if self.price_cleanup else price,
                 "title": sub(self.title_cleanup, "", title) if self.title_cleanup else title,

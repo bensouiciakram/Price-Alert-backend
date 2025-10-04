@@ -12,3 +12,6 @@ class Alert(models.Model):
     channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.product.meta.title} alert'
+
