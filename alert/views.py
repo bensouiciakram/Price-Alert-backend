@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
-from rest_framework.mixins import ListModelMixin,CreateModelMixin
+from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from .serializers import (
     ChannelSerializer,
     AlertSerializers
@@ -17,7 +17,7 @@ class ChannelViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     serializer_class=ChannelSerializer
 
 
-class AlertViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
+class AlertViewSet(ListModelMixin,CreateModelMixin,UpdateModelMixin,GenericViewSet):
     queryset=Alert.objects.all()
     serializer_class=AlertSerializers
 
