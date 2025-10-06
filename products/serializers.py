@@ -17,7 +17,7 @@ class ProductSerializer(serializers.ModelSerializer):
     website = WebsiteSerializer()
     class Meta:
         model=Product
-        fields=['url','created_at','website'] 
+        fields=['id','url','created_at','website','alerts'] 
 
 
 class PriceHistorySerializer(serializers.ModelSerializer):

@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from .serializers import (
     ChannelSerializer,
-    AlertSerializers
+    AlertSerializer
 )
 
 from .models import (
@@ -17,8 +17,8 @@ class ChannelViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     serializer_class=ChannelSerializer
 
 
-class AlertViewSet(ListModelMixin,CreateModelMixin,UpdateModelMixin,GenericViewSet):
+class AlertViewSet(ModelViewSet):
     queryset=Alert.objects.all()
-    serializer_class=AlertSerializers
+    serializer_class=AlertSerializer
 
 

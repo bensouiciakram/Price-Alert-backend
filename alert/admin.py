@@ -11,5 +11,5 @@ class ChannelAdmin(admin.ModelAdmin):
 
 @admin.register(Alert)
 class AlertAdmin(admin.ModelAdmin):
-    list_display=['threshold','frequency','created_at','channel','product']
+    list_display=['id','threshold','frequency','created_at','channel','product']
     list_select_related=['channel','product']

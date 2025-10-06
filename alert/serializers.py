@@ -11,10 +11,10 @@ class ChannelSerializer(serializers.ModelSerializer):
         fields = ['name']
 
 
-class AlertSerializers(serializers.ModelSerializer):
+class AlertSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer()
     product = ProductSerializer()
     class Meta:
         model=Alert
-        fields =['threshold','frequency','created_at','channel','product'] 
+        fields =['id','threshold','frequency','created_at','channel','product'] 
 
