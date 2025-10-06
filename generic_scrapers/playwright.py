@@ -16,17 +16,21 @@ class Extractor:
 
     def scrape_product_metadata(self) -> dict :
         with sync_playwright() as p :
-            browser = p.chromium.launch(headless=False)
+            browser = p.chromium.launch(headless=False,slow_mo=1000)
             context = browser.new_context()
             page = context.new_page()
             page.goto(self.url)
             page_selector = Selector(text=page.content())
             price = page_selector.xpath(self.price_xpath).get('')
+            price = sub(self.price_cleanup, "", price) if self.price_cleanup else price
+    
             title = page_selector.xpath(self.title_xpath).get('')
+            title = sub(self.title_cleanup, "", title) if self.title_cleanup else title
             image = page_selector.xpath(self.image_xpath).get('')
+            image = sub(self.image_cleanup, "", image) if self.image_cleanup else image
             return {
-                "price": sub(self.price_cleanup, "", price) if self.price_cleanup else price,
-                "title": sub(self.title_cleanup, "", title) if self.title_cleanup else title,
-                "image": sub(self.image_cleanup, "", image) if self.image_cleanup else image,
+                "price": float(price),
+                "title": title,
+                "image": image,
             }
 

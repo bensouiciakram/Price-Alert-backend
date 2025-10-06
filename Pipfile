@@ -9,6 +9,9 @@ pillow = "*"
 scrapy = "*"
 requests = "*"
 playwright = "*"
+django-apscheduler = "*"
+apscheduler = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

@@ -1,6 +1,8 @@
+import os 
 from typing import List 
 from urllib.parse import urlparse 
 from django.db import transaction
+from django.core.mail import send_mail
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
@@ -122,7 +124,7 @@ class ScrapeMetaData(APIView):
         xpath = Xpath.objects.filter(website=website).first()
         with transaction.atomic():
             result = self.get_product_metadata(
-                website=website.url,
+                website=product_url,
                 price_xpath=xpath.price_selector,
                 image_xpath=xpath.image_selector,
                 title_xpath=xpath.title_selector,
@@ -183,3 +185,19 @@ class AddNewScraper(APIView):
                 'message':'success'
                 }
             )
+        
+# class SendAlert(APIView):
+
+#     def post(self,request):
+#         data = request.data
+#         name = data.get("Name")
+#         email = data.get("Email")
+#         message = data.get("Message")
+#         send_mail(
+#             f"Client {name} message",
+#             f"Client {name} \nEmail: {email}\n\n{message}",
+#             from_email=os.environ.get('EMAIL_HOST_USER'),
+#             recipient_list=["bensouiciakram@gmail.com"],
+#             fail_silently=False,
+#         )
+#         return Response(data, status=200)
