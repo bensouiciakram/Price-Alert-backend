@@ -5,7 +5,7 @@ from .views import (
     ProductViewSet,
     PriceHistoryViewSet,
     XpathViewSet,
-    ScrapeMetaData,
+    AddProduct,
     AddNewScraper
 )
 
@@ -19,6 +19,6 @@ router.register('xpaths',XpathViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),
-    path('add-product/',ScrapeMetaData.as_view()),
+    path('add-product/',AddProduct.as_view()),
     path('add-scraper/',AddNewScraper.as_view())
 ]

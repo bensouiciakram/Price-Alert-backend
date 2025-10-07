@@ -52,7 +52,7 @@ class XpathViewSet(UpdateModelMixin,ListModelMixin,CreateModelMixin,GenericViewS
     queryset = Xpath.objects.all()
     serializer_class=XpathSerializer
 
-class ScrapeMetaData(APIView):
+class AddProduct(APIView):
 
     def get_website_url(self,url:str) -> str:
         parsed = urlparse(url)
