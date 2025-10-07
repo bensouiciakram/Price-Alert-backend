@@ -1,36 +1,15 @@
 import argparse
 from re import sub 
-from playwright.sync_api import sync_playwright 
+from camoufox.sync_api import Camoufox
 from parsel import Selector 
+from .base import BaseExtractor
 
-class Extractor:
-    def __init__(self, url, price_xpath, title_xpath, image_xpath,
-                 price_cleanup=None, title_cleanup=None, image_cleanup=None, **kwargs):
-        self.url = url
-        self.price_xpath = price_xpath
-        self.title_xpath = title_xpath
-        self.image_xpath = image_xpath
-        self.price_cleanup = price_cleanup
-        self.title_cleanup = title_cleanup
-        self.image_cleanup = image_cleanup
+class Extractor(BaseExtractor):
 
-    def scrape_product_metadata(self) -> dict :
-        with sync_playwright() as p :
-            browser = p.chromium.launch(headless=False,slow_mo=1000)
-            context = browser.new_context()
-            page = context.new_page()
+    def get_response(self) -> Selector :
+        with Camoufox(headless=True,slow_mo=1000) as browser:
+            page = browser.new_page()
             page.goto(self.url)
-            page_selector = Selector(text=page.content())
-            price = page_selector.xpath(self.price_xpath).get('')
-            price = sub(self.price_cleanup, "", price) if self.price_cleanup else price
-    
-            title = page_selector.xpath(self.title_xpath).get('')
-            title = sub(self.title_cleanup, "", title) if self.title_cleanup else title
-            image = page_selector.xpath(self.image_xpath).get('')
-            image = sub(self.image_cleanup, "", image) if self.image_cleanup else image
-            return {
-                "price": float(price),
-                "title": title,
-                "image": image,
-            }
+            # page.wait_for_selector(self.title_xpath)
+            return Selector(text=page.content())
 

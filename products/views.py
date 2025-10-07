@@ -28,7 +28,6 @@ from alert.models import (
 )
 from generic_scrapers import (
     PlaywrightExtractor,
-    scrape_product_metadata,
     RequestsExtractor
 )
 
@@ -69,17 +68,7 @@ class AddProduct(APIView):
             title_cleanup:str,
             library:str
         ) -> dict:
-        if library == 'scrapy':
-            results = scrape_product_metadata(
-                url=website,
-                price_xpath=price_xpath,
-                title_xpath=title_xpath,
-                image_xpath=image_xpath,
-                price_cleanup=price_cleanup,
-                title_cleanup=title_cleanup,
-                image_cleanup=image_cleanup
-            )[0]
-        elif library == 'playwright':
+        if library == 'playwright':
             extractor = PlaywrightExtractor(
                 url=website,
                 price_xpath=price_xpath,

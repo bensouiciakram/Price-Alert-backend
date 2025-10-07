@@ -9,7 +9,6 @@ from products.models import (
 from generic_scrapers import (
     PlaywrightExtractor,
     RequestsExtractor,
-    scrape_product_metadata,
 )
 
 def set_periodic_scraping(alert_id:int):
@@ -31,16 +30,6 @@ def set_periodic_scraping(alert_id:int):
                 image_cleanup=xpath.image_cleanup,
             )
             result = extractor.scrape_product_metadata()
-        elif scrapy_method == 'scrapy':
-            result = scrape_product_metadata(
-                url=product_url,
-                price_xpath=xpath.price_selector,
-                title_xpath=xpath.title_selector,
-                image_xpath=xpath.image_selector,
-                price_cleanup=xpath.price_cleanup,
-                title_cleanup=xpath.title_cleanup,
-                image_cleanup=xpath.image_cleanup,
-            )[0]
         elif scrapy_method == 'requests':
             extractor = RequestsExtractor(
                 url=product_url,
