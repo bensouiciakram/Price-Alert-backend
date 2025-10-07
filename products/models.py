@@ -11,7 +11,7 @@ class Website(models.Model):
 
 class ProductMetaData(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='products/')
+    image = models.CharField()
 
     def __str__(self):
         return f'{self.title} metadata'
