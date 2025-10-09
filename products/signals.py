@@ -1,8 +1,10 @@
-from django.db.models.signals import post_delete,pre_delete
+import os 
+from django.db.models.signals import post_delete,pre_delete,pre_save
 from django.dispatch import receiver 
-from .models import Product 
 from alert.scheduler import scheduler 
-from alert.models import Alert 
+from django.core.mail import send_mail
+from .models import Product,PriceHistory
+from alert.models import Alert
 
 
 @receiver(post_delete,sender=Product)
@@ -22,3 +24,21 @@ def delete_product_jobs(sender,instance,**kwargs):
             scheduler.remove_job(jobs_id,jobstore="default")
         except Exception:
             print('Something is Wrong with job deletion')
+
+
+@receiver(pre_save,sender=PriceHistory)
+def send_alert(sender,instance,**kwargs):
+    product = instance.product
+    alerts = product.alerts
+    if not alerts:
+        print('No alerts attached into the product')
+        return 
+    threshold = alerts.first().threshold
+    if instance.price < threshold:
+        send_mail(
+            f'{product.meta.title} alert',
+            f'{product.meta.title} is under {threshold}',
+            from_email=os.environ.get('EMAIL_HOST_USER'),
+            recipient_list=["bensouiciakram@gmail.com"],
+            fail_silently=False,   
+        )
