@@ -31,12 +31,15 @@ class BaseExtractor():
         price = response.xpath(self.price_xpath).get()
         title = response.xpath(self.title_xpath).get()
         image = response.xpath(self.image_xpath).get()
-        return {
+        product_metadata ={
             'price':self.clean_price(price),
             'title':self.clean_title(title),
             'image':self.clean_image(image)
         }
+        print(f'Data successfully extracted : \n',product_metadata)
+        return product_metadata
 
     @abstractmethod 
     def get_response(self) -> Selector :
+        print(f'Visiting {self.url}')
         pass 
