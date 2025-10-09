@@ -36,6 +36,7 @@ class Command(BaseCommand):
                             seconds=alert.frequency,
                             args=[alert.id],
                             id=job_id,
+                            jobstore="default",
                             max_instances=1,
                             replace_existing=True
                         )

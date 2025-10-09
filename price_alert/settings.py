@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'alert.apps.AlertConfig',
     'django_apscheduler',
     'rest_framework',
     'corsheaders',
+    'alert.apps.AlertConfig',
     'core',
-    'products'
+    # 'products'
+    'products.apps.ProductsConfig'
 ]
 
 MIDDLEWARE = [
