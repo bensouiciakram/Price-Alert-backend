@@ -45,3 +45,9 @@ def set_periodic_scraping(alert_id:int):
             price=result.get('price'),
             product=alert.product
         )
+
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_jobstore(DjangoJobStore(), "default")
+scheduler_started = False  

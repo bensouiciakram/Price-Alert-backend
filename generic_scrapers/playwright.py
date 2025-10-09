@@ -7,7 +7,7 @@ from .base import BaseExtractor
 class Extractor(BaseExtractor):
 
     def get_response(self) -> Selector :
-        with Camoufox(headless=True,slow_mo=1000) as browser:
+        with Camoufox(headless=False,slow_mo=1000) as browser:
             page = browser.new_page()
             page.goto(self.url)
             # page.wait_for_selector(self.title_xpath)
