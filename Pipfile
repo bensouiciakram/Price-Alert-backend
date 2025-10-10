@@ -13,6 +13,8 @@ django-apscheduler = "*"
 apscheduler = "*"
 psycopg2 = "*"
 camoufox = "*"
+djangorestframework-simplejwt = "*"
+djoser = "*"
 
 [dev-packages]
 

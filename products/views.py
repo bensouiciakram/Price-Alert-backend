@@ -4,7 +4,9 @@ from urllib.parse import urlparse
 from django.db import transaction
 from django.core.mail import send_mail
 from django.shortcuts import render
+from rest_framework import status 
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from rest_framework.views import APIView 
@@ -45,6 +47,15 @@ class ProductViewSet(ModelViewSet):
 class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset=PriceHistory.objects.all()
     serializer_class=PriceHistorySerializer
+
+    @action(detail=False, methods=['post'], url_path='latest_price')
+    def latest_price(self, request):
+        product_id = request.data.get('product_id')
+        price_object = PriceHistory.objects.filter(product=product_id).first()
+        return Response({
+            'product_id':product_id,
+            'last_price':price_object.price
+        }, status=status.HTTP_200_OK)
 
 
 class XpathViewSet(UpdateModelMixin,ListModelMixin,CreateModelMixin,GenericViewSet):
