@@ -52,9 +52,11 @@ class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     def latest_price(self, request):
         product_id = request.data.get('product_id')
         price_object = PriceHistory.objects.filter(product=product_id).first()
+
         return Response({
             'product_id':product_id,
-            'last_price':price_object.price
+            'last_price':price_object.price,
+            'checked_at':price_object.checked_at.strftime("%y-%m-%d %H:%M:%S")
         }, status=status.HTTP_200_OK)
 
 
