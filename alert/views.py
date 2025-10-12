@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from .serializers import (
@@ -22,9 +23,10 @@ class ChannelViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
 class AlertViewSet(ModelViewSet):
     queryset=Alert.objects.all()
     serializer_class=AlertSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class AlertMetViewSet(ModelViewSet):
     queryset = AlertMet.objects.select_related('alert', 'alert__product').order_by('-triggered_at').all()
     serializer_class = AlertMetSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]

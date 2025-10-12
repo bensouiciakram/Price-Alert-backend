@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from django.db import transaction
 from django.core.mail import send_mail
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status 
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -44,11 +45,13 @@ class WebsiteViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
 class ProductViewSet(ModelViewSet):
     queryset=Product.objects.all()
     serializer_class=ProductSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset=PriceHistory.objects.all()
     serializer_class=PriceHistorySerializer
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['post'], url_path='latest_price')
     def latest_price(self, request):
@@ -65,6 +68,7 @@ class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
 class XpathViewSet(UpdateModelMixin,ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset = Xpath.objects.all()
     serializer_class=XpathSerializer
+    permission_classes = [IsAuthenticated]
 
 class CurrrencyViewSet(ModelViewSet):
     queryset = Currency.objects.all()
@@ -72,7 +76,7 @@ class CurrrencyViewSet(ModelViewSet):
 
 
 class AddProduct(APIView):
-
+    permission_classes = [IsAuthenticated]
     def get_website_url(self,url:str) -> str:
         parsed = urlparse(url)
         return f"{parsed.scheme}://{parsed.netloc}"
@@ -113,7 +117,7 @@ class AddProduct(APIView):
         return results 
     
     def post(self,request):
-
+        permission_classes = [IsAuthenticated]
         website_qs:Website = Website.objects.filter(url=self.get_website_url(request.data.get('product_url')))
         if not website_qs.exists():
             return Response(
