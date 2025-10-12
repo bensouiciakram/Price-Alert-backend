@@ -3,12 +3,14 @@ from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from .serializers import (
     ChannelSerializer,
-    AlertSerializer
+    AlertSerializer,
+    AlertMetSerializer
 )
 
 from .models import (
     Channel,
-    Alert
+    Alert,
+    AlertMet
 )
 
 
@@ -22,3 +24,7 @@ class AlertViewSet(ModelViewSet):
     serializer_class=AlertSerializer
 
 
+class AlertMetViewSet(ModelViewSet):
+    queryset = AlertMet.objects.select_related('alert', 'alert__product').order_by('-triggered_at')
+    serializer_class = AlertMetSerializer
+    # permission_classes = [permissions.IsAuthenticated]

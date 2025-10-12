@@ -18,3 +18,9 @@ class Alert(models.Model):
     def __str__(self):
         return f'{self.product.meta.title} alert'
 
+class AlertMet(models.Model):
+    alert = models.ForeignKey(Alert, on_delete=models.CASCADE, related_name="met_events")
+    triggered_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Alert met for {self.alert.product.name} at {self.triggered_at}"
