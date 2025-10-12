@@ -23,4 +23,4 @@ class AlertMet(models.Model):
     triggered_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Alert met for {self.alert.product.name} at {self.triggered_at}"
+        return f"Alert met for {self.alert.product.meta.title} at {self.triggered_at}"

@@ -25,6 +25,6 @@ class AlertViewSet(ModelViewSet):
 
 
 class AlertMetViewSet(ModelViewSet):
-    queryset = AlertMet.objects.select_related('alert', 'alert__product').order_by('-triggered_at')
+    queryset = AlertMet.objects.select_related('alert', 'alert__product').order_by('-triggered_at').all()
     serializer_class = AlertMetSerializer
     # permission_classes = [permissions.IsAuthenticated]
