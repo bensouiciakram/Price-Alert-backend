@@ -1,9 +1,17 @@
 from django.db import models
 
 
+class Currency(models.Model):
+    currency_name = models.CharField(max_length=10)
+    currency_symbol = models.CharField(max_length=3)
+
+    def __str__(self):
+        return self.currency_name
+
 class Website(models.Model):
     url = models.CharField(max_length=255)
     scraping_method = models.CharField(max_length=255)
+    currency = models.ForeignKey(Currency,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         return self.url

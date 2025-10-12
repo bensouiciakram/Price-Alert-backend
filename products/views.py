@@ -11,6 +11,7 @@ from rest_framework.viewsets import ModelViewSet,GenericViewSet
 from rest_framework.mixins import ListModelMixin,CreateModelMixin,UpdateModelMixin
 from rest_framework.views import APIView 
 from .serializers import (
+    CurrencySerializer,
     WebsiteSerializer,
     ProductSerializer,
     PriceHistorySerializer,
@@ -18,6 +19,7 @@ from .serializers import (
 )
 
 from .models import (
+    Currency,
     Website,
     Product,
     ProductMetaData,
@@ -63,6 +65,11 @@ class PriceHistoryViewSet(ListModelMixin,CreateModelMixin,GenericViewSet):
 class XpathViewSet(UpdateModelMixin,ListModelMixin,CreateModelMixin,GenericViewSet):
     queryset = Xpath.objects.all()
     serializer_class=XpathSerializer
+
+class CurrrencyViewSet(ModelViewSet):
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer
+
 
 class AddProduct(APIView):
 
@@ -152,6 +159,10 @@ class AddProduct(APIView):
                 channel=channel,
                 product=product
             )
+            price_history = PriceHistory.objects.create(
+                price=result.get('price'),
+                product=product
+            )
             return Response(
                 {
                     'message':'success'
@@ -161,7 +172,6 @@ class AddProduct(APIView):
     
 
 class AddNewScraper(APIView):
-
     def post(self,request):
         if Website.objects.filter(url=request.data.get('url')).exists():
             return Response(
@@ -169,19 +179,21 @@ class AddNewScraper(APIView):
                     'message':'The Scraper is already exist'
                 }
             )
+        data = request.data 
         with transaction.atomic():
             website = Website.objects.create(
-                url=request.data.get('url'),
-                scraping_method=request.data.get('scraping_method')
+                url=data.get('url'),
+                scraping_method=data.get('scraping_method'),
+                currency_id=data.get('currency')
             )
             Xpath.objects.create(
                 website=website,
-                price_selector=request.data.get('price_selector'),
-                image_selector=request.data.get('image_selector'),
-                title_selector=request.data.get('title_selector'),
-                price_cleanup=request.data.get('price_cleanup'),
-                title_cleanup=request.data.get('title_cleanup'),
-                image_cleanup=request.data.get('image_cleanup'),
+                price_selector=data.get('price_selector'),
+                image_selector=data.get('image_selector'),
+                title_selector=data.get('title_selector'),
+                price_cleanup=data.get('price_cleanup'),
+                title_cleanup=data.get('title_cleanup'),
+                image_cleanup=data.get('image_cleanup'),
             )
             return Response(
                 {
@@ -189,18 +201,4 @@ class AddNewScraper(APIView):
                 }
             )
         
-# class SendAlert(APIView):
 
-#     def post(self,request):
-#         data = request.data
-#         name = data.get("Name")
-#         email = data.get("Email")
-#         message = data.get("Message")
-#         send_mail(
-#             f"Client {name} message",
-#             f"Client {name} \nEmail: {email}\n\n{message}",
-#             from_email=os.environ.get('EMAIL_HOST_USER'),
-#             recipient_list=["bensouiciakram@gmail.com"],
-#             fail_silently=False,
-#         )
-#         return Response(data, status=200)

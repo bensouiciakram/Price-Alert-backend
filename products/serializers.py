@@ -4,14 +4,24 @@ from .models import (
     Product,
     ProductMetaData,
     PriceHistory,
-    Xpath
+    Xpath,
+    Currency
 )
 
+class CurrencySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Currency 
+        fields = [
+            'id',
+            'currency_name',
+            'currency_symbol'
+        ]
 
 class WebsiteSerializer(serializers.ModelSerializer):
+    currency = CurrencySerializer()
     class Meta:
         model = Website 
-        fields = ['url']
+        fields = ['url','currency']
 
 class ProductMetaDataSerializer(serializers.ModelSerializer):
     class Meta :
@@ -39,5 +49,4 @@ class XpathSerializer(serializers.ModelSerializer):
     class Meta:
         model=Xpath
         fields=['website','price_selector','title_selector','image_selector']
-
 

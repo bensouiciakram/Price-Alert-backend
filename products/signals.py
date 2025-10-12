@@ -3,7 +3,7 @@ from django.db.models.signals import post_delete,pre_delete,pre_save
 from django.dispatch import receiver 
 from alert.scheduler import scheduler 
 from django.core.mail import send_mail
-from .models import Product,PriceHistory
+from .models import Product,PriceHistory,Website
 from alert.models import Alert
 
 

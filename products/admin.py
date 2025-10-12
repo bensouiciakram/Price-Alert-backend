@@ -4,7 +4,8 @@ from .models import (
     Product,
     ProductMetaData,
     PriceHistory,
-    Xpath
+    Xpath,
+    Currency 
 )
 
 # Register your models here.
@@ -33,3 +34,8 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductMetaData)
 class ProductMedaDataAdmin(admin.ModelAdmin):
     list_display =['title','image']
+
+
+@admin.register(Currency)
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display=['currency_name','currency_symbol']
