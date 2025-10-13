@@ -15,6 +15,8 @@ psycopg2 = "*"
 camoufox = "*"
 djangorestframework-simplejwt = "*"
 djoser = "*"
+whitenoise = "*"
+gunicorn = {version = "*", markers = "sys_platform == 'linux'"}
 
 [dev-packages]
 
