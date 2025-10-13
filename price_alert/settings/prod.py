@@ -11,3 +11,5 @@ CORS_ALLOW_ALL_ORIGINS = True # TODO : remove later
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('PRICE_ALERT_DATABASE_URL'))
 }
+
+DOMAIN = "app.price-alert.akrambensouici.com"
