@@ -1,3 +1,5 @@
+import os 
+import dj_database_url
 from .comm import *
 
 DEBUG = False
@@ -5,12 +7,5 @@ DEBUG = False
 ALLOWED_HOSTS = ['*'] # TODO : set it into the app subdomain 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'price_alert',    
-        'USER': 'postgres',           
-        'PASSWORD': 'qqqq', 
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.parse(os.environ.get('PRICE_ALERT_DATABASE_URL'))
 }

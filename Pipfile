@@ -17,6 +17,7 @@ djangorestframework-simplejwt = "*"
 djoser = "*"
 whitenoise = "*"
 gunicorn = {version = "*", markers = "sys_platform == 'linux'"}
+dj-database-url = "*"
 
 [dev-packages]
 
