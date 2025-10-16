@@ -48,6 +48,6 @@ def set_periodic_scraping(alert_id:int):
 
 
 
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler(timezone="UTC")
 scheduler.add_jobstore(DjangoJobStore(), "default")
 scheduler_started = False  
