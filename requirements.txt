@@ -1,0 +1,17 @@
+django
+pillow
+scrapy
+requests
+playwright
+apscheduler
+django-apscheduler
+psycopg2-binary
+camoufox
+djangorestframework-simplejwt
+djoser
+whitenoise
+gunicorn ; sys_platform == "linux"
+whitenoise
+dj-database-url
+django-cors-headers
+tzdata
