@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from alert.scheduler import scheduler 
 from django.core.mail import send_mail
 from .models import Product,PriceHistory,Website
-from alert.models import Alert
+from alert.models import Alert,AlertMet
 
 
 @receiver(post_delete,sender=Product)
@@ -33,8 +33,12 @@ def send_alert(sender,instance,**kwargs):
     if not alerts:
         print('No alerts attached into the product')
         return 
-    threshold = alerts.first().threshold
+    alert = alerts.first()
+    threshold = alert.threshold
     if instance.price < threshold:
+        AlertMet.objects.create(
+            alert=alert
+        )
         send_mail(
             f'{product.meta.title} alert',
             f'{product.meta.title} is under {threshold}',
