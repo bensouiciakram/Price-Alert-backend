@@ -117,7 +117,6 @@ class AddProduct(APIView):
         return results 
     
     def post(self,request):
-        permission_classes = [IsAuthenticated]
         website_qs:Website = Website.objects.filter(url=self.get_website_url(request.data.get('product_url')))
         if not website_qs.exists():
             return Response(
@@ -136,17 +135,17 @@ class AddProduct(APIView):
             )
         product = product_sq.first()
         xpath = Xpath.objects.filter(website=website).first()
+        result = self.get_product_metadata(
+            website=product_url,
+            price_xpath=xpath.price_selector,
+            image_xpath=xpath.image_selector,
+            title_xpath=xpath.title_selector,
+            price_cleanup=xpath.price_cleanup,
+            title_cleanup=xpath.title_cleanup,
+            image_cleanup=xpath.image_cleanup,
+            library=website.scraping_method
+        )
         with transaction.atomic():
-            result = self.get_product_metadata(
-                website=product_url,
-                price_xpath=xpath.price_selector,
-                image_xpath=xpath.image_selector,
-                title_xpath=xpath.title_selector,
-                price_cleanup=xpath.price_cleanup,
-                title_cleanup=xpath.title_cleanup,
-                image_cleanup=xpath.image_cleanup,
-                library=website.scraping_method
-            )
             product_metadata = ProductMetaData.objects.create(
                 title=result.get('title'),
                 image=result.get('image'),
