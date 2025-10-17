@@ -34,15 +34,17 @@ def send_alert(sender,instance,**kwargs):
         print('No alerts attached into the product')
         return 
     alert = alerts.first()
+    channel = alert.channel 
     threshold = alert.threshold
     if instance.price < threshold:
         AlertMet.objects.create(
             alert=alert
         )
-        send_mail(
-            f'{product.meta.title} alert',
-            f'{product.meta.title} is under {threshold}',
-            from_email=os.environ.get('EMAIL_HOST_USER'),
-            recipient_list=["bensouiciakram@gmail.com"],
-            fail_silently=False,   
-        )
+        if channel.name == 'gmail':
+            send_mail(
+                f'{product.meta.title} alert',
+                f'{product.meta.title} is under {threshold}',
+                from_email=os.environ.get('EMAIL_HOST_USER'),
+                recipient_list=["bensouiciakram@gmail.com"],
+                fail_silently=False,   
+            )
