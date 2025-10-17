@@ -24,4 +24,4 @@ COPY . /app/
 EXPOSE 8001
 
 # Run Gunicorn with higher timeout to prevent worker kills during scraping
-CMD ["gunicorn", "price_alert.wsgi:application", "--bind", "0.0.0.0:8001", "--timeout", "300", "--workers", "3"]
+CMD ["gunicorn", "price_alert.wsgi:application", "--bind", "0.0.0.0:8001", "--timeout", "300"]
