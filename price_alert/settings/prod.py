@@ -4,9 +4,12 @@ from .comm import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*'] # TODO : set it into the app subdomain 
+ALLOWED_HOSTS = ['price-alert.akrambensouici.com']
 
-CORS_ALLOW_ALL_ORIGINS = True # TODO : remove later 
+CORS_ALLOWED_ORIGINS = [
+    "https://app.price-alert.akrambensouici.com",
+]
+
 CSRF_TRUSTED_ORIGINS = ['https://price-alert.akrambensouici.com']
 
 DATABASES = {
