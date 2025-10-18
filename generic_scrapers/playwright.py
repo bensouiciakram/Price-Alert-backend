@@ -1,16 +1,17 @@
-import argparse
-from re import sub 
+import logging
 from camoufox.sync_api import Camoufox
-from parsel import Selector 
+from parsel import Selector
 from .base import BaseExtractor
 
-class Extractor(BaseExtractor):
+logger = logging.getLogger(__name__)
 
-    def get_response(self) -> Selector :
+
+class Extractor(BaseExtractor):
+    def get_response(self) -> Selector:
+        logger.debug(f"Fetching page with Playwright: {self.url}")
         super().get_response()
-        with Camoufox(headless=True,slow_mo=1000) as browser:
+        with Camoufox(headless=True, slow_mo=1000) as browser:
             page = browser.new_page()
             page.goto(self.url)
-            # page.wait_for_selector(self.title_xpath)
+            logger.debug(f"Page loaded successfully (Playwright): {self.url}")
             return Selector(text=page.content())
-
