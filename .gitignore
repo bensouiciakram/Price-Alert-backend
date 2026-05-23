@@ -87,3 +87,5 @@ poetry.lock
 # Local dev files
 *.sqlite3
 *.json
+
+myenv/

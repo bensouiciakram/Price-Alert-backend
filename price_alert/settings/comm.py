@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('PRICE_ALERT_SECRET_KEY')
+SECRET_KEY = os.environ.get('PRICE_ALERT_SECRET_KEY', 'django-insecure-dev-key-change-in-production')
 
 INSTALLED_APPS = [
     "django.contrib.admin",
