@@ -4,6 +4,7 @@ FROM mcr.microsoft.com/playwright/python:v1.45.0-jammy
 # Environment setup
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
     TZ=UTC \
     DEBIAN_FRONTEND=noninteractive
 
