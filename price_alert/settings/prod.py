@@ -4,7 +4,7 @@ from .comm import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['price-alert.akrambensouici.com', 'api.price-alert.akrambensouici.com']
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'price-alert.akrambensouici.com,api.price-alert.akrambensouici.com').split(',')
 
 CORS_ALLOWED_ORIGINS = [
     "https://price-alert.akrambensouici.com",
