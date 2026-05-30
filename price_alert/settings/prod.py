@@ -10,7 +10,10 @@ CORS_ALLOWED_ORIGINS = [
     "https://price-alert.akrambensouici.com",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://price-alert.akrambensouici.com']
+CSRF_TRUSTED_ORIGINS = [
+    "https://price-alert.akrambensouici.com",
+    "https://api.price-alert.akrambensouici.com",
+]
 
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('PRICE_ALERT_DATABASE_URL'))
